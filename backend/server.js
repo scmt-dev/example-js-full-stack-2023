@@ -77,6 +77,53 @@ app.post('/login', function (req, res, next) {
     );
 })
 
+app.get('/me', function (req, res, next) {
+    try {
+        const token = req.headers.authorization.split(" ")[1]
+        if(!token) {
+            return res.status(401).send({message:'Invalid credentials'})
+        }
+        const data = jwt.verify(token, "secret")
+        if(!data) {
+            return res.status(401).send({message:'Invalid credentials'})
+        }
+        connection.query(
+            'SELECT * FROM users WHERE id = ?',
+            [data.id],
+            function(err, results) {
+              if(err) {
+                  return res.status(500).send({message:'Server error'})
+              }
+              if(results.length === 0) {
+                  return res.status(404).send({message:'User not found'})
+              }
+              const user = results[0]
+              res.send(user);
+            }
+        );
+    } catch (error) {
+        return res.status(401).send({message:'Invalid credentials'})
+    }
+})
+
+// create psot
+app.post('/posts', function (req, res, next) {
+    const { body } = req.body
+    if(!body) {
+        return res.status(400).send({message:'Body is required'})
+    }
+    connection.query(
+      'INSERT INTO posts(body, user_id) VALUES (?, ?)',
+      [body, userId],
+      function(err, results) {
+        if(err) {
+            return res.status(500).send({message:'Server error'})
+        }
+        res.send(results);
+      }
+    );
+})
+
 
 
 app.listen(4000, function () {
