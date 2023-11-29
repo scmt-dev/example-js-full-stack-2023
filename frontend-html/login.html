@@ -8,9 +8,22 @@
 <body>
     <div>
         <h2>Login</h2>
-        <input type="text" id="email" placeholder="Email">
-        <input type="text" id="pwd" placeholder="Password">
-        <button id="login">Login</button>
+        <div>
+            <label for="email">Email</label>
+            <input type="text" id="email" placeholder="Email">
+        </div>
+        <div>
+            <label for="pwd">Password</label>
+            <input type="text" id="pwd" placeholder="Password">
+        </div>
+        <div>
+            <button id="login" onclick="handleLogin()">Login</button>
+            |
+            <a href="./regsiter.html">
+                Create account
+            </a>
+        </div>
     </div>
+    <script src="./auth.js"></script>
 </body>
 </html>
