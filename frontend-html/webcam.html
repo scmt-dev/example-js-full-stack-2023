@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web cam</title>
+</head>
+
+<body>
+
+    <style>
+        #basic {
+            background: #000;
+            border: 1px solid #ccc;
+            width: 400px;
+            height: 300px;
+            margin: 0 auto;
+        }
+
+        video,
+        #cssfilters-stream {}
+
+        video,
+        #cssfilters-video,
+        #screenshot-img {
+            width: 400px;
+            height: 300px;
+        }
+
+        audio,
+        canvas,
+        video {
+            display: inline-block;
+        }
+
+        button {
+            background: #333;
+            color: #FFF;
+            border-radius: 4px;
+            border: 0;
+            padding: 10px 14px;
+        }
+
+        button,
+        input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+            cursor: pointer;
+            -webkit-appearance: button;
+        }
+
+        button,
+        input {
+            line-height: normal;
+        }
+        #result {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    </style>
+    <div id="basic" style="text-align:center;">
+        <video class="videostream" autoplay="" controls></video>
+        <audio class="audiostream" autoplay=""></audio>
+        <p>
+            <button class="capture-button">Open</button>
+            <button id="stop-button">Stop</button>
+            <button id="cap-button">Capture</button>
+        </p>
+        <div id="result"></div>
+    </div>
+
+
+    <script>
+        (function () {
+
+            const video = document.querySelector('#basic video');
+            const audio = document.querySelector('#basic audio');
+
+            const captureVideoButton = document.querySelector('#basic .capture-button');
+            const stopVideoButton = document.querySelector('#basic #stop-button');
+            const captureButton = document.querySelector('#basic #cap-button');
+
+            //Capture Video
+            captureVideoButton.onclick = function () {
+                navigator.mediaDevices.getUserMedia({
+                    // audio: true,
+                    video: true
+                })
+                    .then(stream => {
+                        window.localStream = stream;
+                        video.srcObject = stream;
+                        // audio.srcObject = stream;
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            };
+
+            stopVideoButton.onclick = function () {
+                localStream.getVideoTracks()[0].stop();
+                video.src = '';
+
+                // localStream.getAudioTracks()[0].stop();
+                // audio.src = '';
+            };
+
+            //Capture Image
+            captureButton.onclick = function () {
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                canvas.getContext('2d').drawImage(video, 0, 0);
+                // Other browsers will fall back to image/png
+                // document.querySelector('#basic').appendChild(canvas);
+                // save to cripboard
+                canvas.toBlob(function (blob) {
+                    navigator.clipboard.write([
+                        new ClipboardItem({
+                            [blob.type]: blob
+                        })
+                    ]);
+                    // download file
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    const image = document.createElement('img');
+                    image.src = a.href;
+                    image.width = 100;
+                    result.appendChild(image);
+                    a.download = 'image.png';
+                    document.body.appendChild(a);
+                    a.click();
+                    console.log('Image copied.');
+                });
+            };
+        })();
+    
+    console.log(navigator)
+
+
+    </script>
+</body>
+
+</html>

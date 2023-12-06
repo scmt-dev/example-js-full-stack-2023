@@ -1,0 +1,16 @@
+body{
+    background-color: #fefeff;
+}
+
+#box {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    transition: 1s all;
+}
+
+#box:hover {
+    background-color: blue;
+    border-radius: 30px;
+    rotate:45deg;
+}
