@@ -3,13 +3,9 @@ const cors = require('cors')
 const mysql = require('mysql2');
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
+const connect = require('./connection')
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  database: 'mydb',
-  password: 'password'
-});
+const connection = connect.connection
 
 const app = express()
 app.use(cors())
@@ -17,6 +13,15 @@ app.use(express.json())
 
 app.get('/', function (req, res, next) {
     res.send('Hello World! from server')
+})
+
+app.get('/aha', function (req, res, next) {
+    res.send('aha 1234')
+})
+
+// read html regsiter
+app.get('/register', function (req, res, next) {
+    res.sendFile(__dirname + '/register.html')
 })
 
 app.get('/users', function (req, res, next) {

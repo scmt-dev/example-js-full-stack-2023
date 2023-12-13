@@ -28,8 +28,8 @@ async function handleLogin() {
 
 async function handleRegister() {
     try {
-        const email = getValue('email')
-        const password = getValue('pwd')
+        const email = getValue('remail')
+        const password = getValue('rpwd')
         const fname = getValue('fname')
         const lname = getValue('lname')
         const respone = await  fetch(`${API}/register`, {
