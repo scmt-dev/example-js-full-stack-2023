@@ -19,9 +19,41 @@ body {
     width: 100%;
     height: 150px;
     object-fit: cover;
+    border-radius: 10px;
 }
 .pos {
     display: grid;
     grid-template-columns: 1fr 600px;
     grid-gap: 1rem;
+}
+
+#items {
+    list-style-type: none;
+}
+
+#items img {
+    border-radius: 10px;
+}
+#items li{
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 1rem;
+}
+.flex {
+    display: flex;
+}
+.justify-between {
+    justify-content: space-between;
+}
+.border-none {
+    border: none;
+}
+#items button {
+    border: none;
+    padding: 2px 5px;
+    background-color: transparent;
+}
+.border{
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }

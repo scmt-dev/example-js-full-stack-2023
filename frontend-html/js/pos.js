@@ -4,19 +4,32 @@ const items = []
 
 function renderCart() {
     const ul = document.getElementById('items')
+    ul.innerHTML = ''
     items.forEach(e => {
-        const li = document.createElement('li')
-        const span = document.createElement('span')
-        const span2 = document.createElement('span')
-        const img = document.createElement('img')
-        img.src = e.img
-        img.width = 100
-        span.textContent = e.name
-        span2.textContent = e.price.toLocaleString()
-        li.appendChild(img)
-        li.appendChild(span)
-        li.appendChild(span2)
-        ul.appendChild(li)
+        const li = `
+        <li>
+                    <img width="100" src="${e.img}" alt="">
+                    <div>
+                        <article class="flex justify-between">
+                            <h3>${e.name}</h3>
+                            <span>${e.price}</span>
+                        </article>
+                        <article class="flex justify-between">
+                            <span class="border">
+                                <button>-</button>
+                                <b>${e.quantity}</b>
+                                <button>+</button>
+                            </span>
+                            <span>
+                                <button>
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                            </span>
+                        </article>
+                    </div>
+                </li>
+        `
+        ul.innerHTML += li
     })
 }
 
