@@ -14,11 +14,18 @@
         <li>
             <button onclick="add()">+</button>
             <button onclick="minus()">-</button>
-            <button>x</button>
-            <button>/</button>
+            <button onclick="multiply()">x</button>
+            <button onclick="divide()">/</button>
         </li>
     </ul>
     <div id="display"></div>
+
+    <div class="box" id="box"></div>
+    <button onclick="move('left')">left</button>
+    <button onclick="move('right')">right</button>
+    <button onclick="move('up')">up</button>
+    <button onclick="move('down')">down</button>
+
   </div>  
   <script src="./js/calculator.js"></script>
 </body>
