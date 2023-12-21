@@ -1,8 +1,25 @@
 let x = 0
 let y = 0
+let fx = 0
+let fy = 0
+let score = 0
 const box = document.getElementById('box')
+const frog = document.getElementById('frog')
+
+function frogJump() {
+    fx = Math.floor(Math.random() * 1366)
+    fy = Math.floor(Math.random() * 768)
+    frog.style.top = fy + 'px'
+    frog.style.left = fx + 'px'
+}
 
 function moveBox(direction) {
+    const xx = `: x: ${x}, y: ${y}, fx: ${fx}, fy: ${fy}`
+    document.getElementById('score').innerText = score+xx
+    if(x === fx && y === fy) {
+        score++
+        frogJump()
+    }
     switch (direction) {
         case 'up':
             y -= 10
@@ -49,5 +66,12 @@ document.addEventListener('keydown', function (event) {
         case 'a':
             moveBox('left')
             break;
+        case ' ':
+            frogJump()
+            break;
+        case 'j':
+            frogJump()
+            break;
     }
 })
+
